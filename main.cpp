@@ -12,6 +12,11 @@ int main() {
         return 1;
     }
 
+    /*
+        the maps keys are words, the value is a pair in which the first element is an int representing
+        the amount of times the word has repeated, the second element is a set<int> that represents
+        at what line numbers that particular word was encountered.
+    */
     unordered_map<string, pair<int, set<int>>> wordInfo;
     set<string> urls;
 
@@ -34,6 +39,13 @@ int main() {
                 wordInfo[word].first++;
                 wordInfo[word].second.insert(lineNum);
             }
+        }
+    }
+
+    wordOutput << "Word\tCount\n";
+    for (const auto& [word, info] : wordInfo) {
+        if (info.first > 1) {
+            wordOutput << word << "\t" << info.first << "\n";
         }
     }
 
