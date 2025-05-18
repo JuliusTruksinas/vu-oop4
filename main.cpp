@@ -3,8 +3,8 @@
 
 int main() {
     ifstream input("text.txt");
-    ofstream wordOutput("output.txt");
-    ofstream urlOutput("url.txt");
+    ofstream wordOutput("words.txt");
+    ofstream urlOutput("urls.txt");
     ofstream xrefOutput("xref.txt");
 
     if (!input.is_open()) {
@@ -46,6 +46,17 @@ int main() {
     for (const auto& [word, info] : wordInfo) {
         if (info.first > 1) {
             wordOutput << word << "\t" << info.first << "\n";
+        }
+    }
+
+    xrefOutput << "Word\tCount\tLines\n";
+    for (const auto& [word, info] : wordInfo) {
+        if (info.first > 1) {
+            xrefOutput << word << "\t" << info.first << "\t";
+            for (int lineNum : info.second) {
+                xrefOutput << lineNum << " ";
+            }
+            xrefOutput << "\n";
         }
     }
 
