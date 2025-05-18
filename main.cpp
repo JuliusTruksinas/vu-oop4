@@ -3,14 +3,15 @@
 
 int main() {
     ifstream input("text.txt");
-    ofstream wordOutput("words.txt");
-    ofstream urlOutput("urls.txt");
-    ofstream xrefOutput("xref.txt");
 
     if (!input.is_open()) {
         cout << "Failed to open text.txt" << endl;
         return 1;
     }
+
+    ofstream wordOutput("words.txt");
+    ofstream urlOutput("urls.txt");
+    ofstream xrefOutput("xref.txt");
 
     /*
         the maps keys are words, the value is a pair in which the first element is an int representing
@@ -34,34 +35,42 @@ int main() {
                 continue;
             }
 
-            string word = cleanWord(word);
-            if (!word.empty()) {
-                wordInfo[word].first++;
-                wordInfo[word].second.insert(lineNum);
+            string cleanedWord = cleanWord(word);
+            if (!cleanedWord.empty()) {
+                wordInfo[cleanedWord].first++;
+                wordInfo[cleanedWord].second.insert(lineNum);
             }
         }
     }
 
-    wordOutput << "Word\tCount\n";
+    wordOutput << left << setw(15) << "Word" 
+           << setw(10) << "Count" << endl;
+
     for (const auto& [word, info] : wordInfo) {
         if (info.first > 1) {
-            wordOutput << word << "\t" << info.first << "\n";
+            wordOutput << left << setw(15) << word 
+                    << setw(10) << info.first << endl;
         }
     }
 
-    xrefOutput << "Word\tCount\tLines\n";
+    xrefOutput << left << setw(15) << "Word"
+           << setw(10) << "Count"
+           << "Lines" << endl;
+
     for (const auto& [word, info] : wordInfo) {
         if (info.first > 1) {
-            xrefOutput << word << "\t" << info.first << "\t";
+            xrefOutput << left << setw(15) << word
+                    << setw(10) << info.first;
+
             for (int lineNum : info.second) {
                 xrefOutput << lineNum << " ";
             }
-            xrefOutput << "\n";
+            xrefOutput << endl;
         }
     }
 
     for (const string& url : urls) {
-        urlOutput << url << "\n";
+        urlOutput << url << endl;
     }
 
     input.close();
