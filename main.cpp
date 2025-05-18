@@ -60,6 +60,10 @@ int main() {
         }
     }
 
+    for (const string& url : urls) {
+        urlOutput << url << "\n";
+    }
+
     input.close();
     wordOutput.close();
     urlOutput.close();
