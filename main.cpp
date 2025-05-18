@@ -68,6 +68,8 @@ int main() {
     wordOutput.close();
     urlOutput.close();
     xrefOutput.close();
+
+    cout << "Successfully finished." << endl;
         
     return 0;
 }
